@@ -1,0 +1,50 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2024-05-27T00:00:00.000Z",
+  "__export_source": "insomnia.desktop.app:v2024.2.0",
+  "resources": [
+    {
+      "_id": "req_listar_tarefas_clickup",
+      "parentId": "wrk_clickup_api",
+      "modified": 1716800000000,
+      "created": 1716800000000,
+      "url": "https://api.clickup.com/api/v2/list/901311915022/task",
+      "name": "Listar tarefas ClickUp",
+      "description": "Consulta todas as tarefas na lista do ClickUp",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "pk_SEU_TOKEN_AQUI"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1716800000000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "wrk_clickup_api",
+      "parentId": null,
+      "modified": 1716800000000,
+      "created": 1716800000000,
+      "name": "ClickUp API",
+      "description": "Testes ClickUp API",
+      "scope": "collection",
+      "_type": "workspace"
+    }
+  ]
+}
