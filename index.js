@@ -4,7 +4,7 @@ const app = express();
 
 app.use(express.json());
 
-// 🔐 Dados da API do ClickUp
+// 🔐 Dados da API do ClickUp (pegando das variáveis do Railway)
 const CLICKUP_API_TOKEN = process.env.CLICKUP_API_TOKEN;
 const CLICKUP_LIST_ID = process.env.CLICKUP_LIST_ID;
 
@@ -13,18 +13,18 @@ app.get('/', (req, res) => {
   res.send('Servidor funcionando! ✅');
 });
 
-// 🚀 Endpoint que recebe o webhook do Kommo
+// 🚀 Endpoint para receber webhook do Kommo
 app.post('/webhook', async (req, res) => {
   const data = req.body;
 
   console.log('🟢 Dados recebidos do Kommo:', JSON.stringify(data, null, 2));
 
-  const status = data.lead.status?.name;
+  const status = data.lead?.status?.name;
 
   if (status === 'Demanda Identificada') {
-    const leadName = data.lead.name;
-    const phone = data.lead.custom_fields_values?.find(f => f.field_name === 'Telefone')?.values[0]?.value || '';
-    const email = data.lead.custom_fields_values?.find(f => f.field_name === 'Email')?.values[0]?.value || '';
+    const leadName = data.lead.name || 'Lead sem nome';
+    const phone = data.lead.custom_fields_values?.find(f => f.field_name === 'Telefone')?.values[0]?.value || 'Sem telefone';
+    const email = data.lead.custom_fields_values?.find(f => f.field_name === 'Email')?.values[0]?.value || 'Sem email';
 
     try {
       const response = await axios.post(
@@ -32,11 +32,11 @@ app.post('/webhook', async (req, res) => {
         {
           name: `Atender lead: ${leadName}`,
           description: `Telefone: ${phone}\nEmail: ${email}`,
-          status: 'Open'
+          status: 'Open'  // Verifique se este status existe na sua lista do ClickUp
         },
         {
           headers: {
-            Authorization: CLICKUP_API_TOKEN,
+            Authorization: `Bearer ${CLICKUP_API_TOKEN}`,
             'Content-Type': 'application/json'
           }
         }
